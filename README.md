@@ -17,7 +17,7 @@ LangGraph applications — no matter how complex — are built from three primit
 | # | Folder | Title | Blog |
 |---|--------|-------|------|
 | Part 1 | `basics-1-stategraph-nodes-edges/` | StateGraph, Nodes & Edges | [Read →](https://shafiqulai.github.io/blogs/blog_8.html) |
-| Part 2 | `basics-2-state-annotated-reducers/` | State, Annotated Fields & Custom Reducers | Coming soon |
+| Part 2 | `basics-2-state-annotated-reducers/` | State, Annotated Fields & Custom Reducers | [Read →](https://shafiqulai.github.io/blogs/blog_9.html) |
 | Part 3 | `basics-3-conditional-edges/` | Conditional Edges & Routing Logic | Coming soon |
 | Part 4 | `basics-4-checkpointers-memory/` | Checkpointers, Memory & Streaming | Coming soon |
 | Part 5 | `basics-5-tools-toolnode/` | Tools, ToolNode & Prebuilt Components | Coming soon |
@@ -38,6 +38,24 @@ Every LangGraph application is a graph. This part introduces the three component
 | `app.py` | `QAApp` — Gradio `ChatInterface` wrapping the same runner |
 
 For a detailed explanation of every concept and code walkthrough → [https://shafiqulai.github.io/blogs/blog_8.html](https://shafiqulai.github.io/blogs/blog_8.html)
+
+#### Part 2 — State, Annotated Fields & Custom Reducers
+
+By default, LangGraph uses **last-write-wins**: when a node returns a value for a field, it replaces whatever was there. For fields that should *accumulate* across nodes, this silently discards data. This part introduces `Annotated` type hints with reducer functions — the mechanism that tells LangGraph to merge values instead of replacing them. Covers `operator.add`, `add_messages`, custom reducers, and the `MessagesState` shortcut. A **Topic Expander** graph (two nodes, both writing to the same `points` field) demonstrates the pattern in practice.
+
+| File | Responsibility |
+|------|---------------|
+| `config.py` | Loads `.env`, exposes `Config` class with model settings |
+| `llm.py` | Wraps `ChatGoogleGenerativeAI` using `Config` |
+| `state.py` | Defines `TopicState` — includes `points: Annotated[list[str], operator.add]` |
+| `nodes.py` | `TopicNodes` with `expand_node` and `refine_node` — loads prompts from files |
+| `prompts/expand_node.txt` | Prompt template for `expand_node` (uses `{topic}` placeholder) |
+| `prompts/refine_node.txt` | Prompt template for `refine_node` (uses `{topic}` and `{existing}` placeholders) |
+| `graph.py` | Builds and compiles the `StateGraph`: `START → expand → refine → END` |
+| `topic_runner.py` | `TopicRunner` — console entry point, runs two demo topics |
+| `app.py` | `TopicApp` — Gradio `ChatInterface` wrapping the runner |
+
+For a detailed explanation of every concept and code walkthrough → [https://shafiqulai.github.io/blogs/blog_9.html](https://shafiqulai.github.io/blogs/blog_9.html)
 
 ---
 
@@ -112,17 +130,28 @@ GEMINI_MAX_RETRIES=2
 
 ```
 langgraph/
-├── basics-1-stategraph-nodes-edges/   # Series 1, Part 1
-│   ├── config.py                       # Loads .env, defines Config
-│   ├── llm.py                          # GeminiLLM wrapper
-│   ├── state.py                        # QAState (TypedDict)
-│   ├── nodes.py                        # QANodes — answer_node
-│   ├── graph.py                        # QAGraph — builds & compiles StateGraph
+├── basics-1-stategraph-nodes-edges/        # Series 1, Part 1
+│   ├── config.py                            # Loads .env, defines Config
+│   ├── llm.py                               # GeminiLLM wrapper
+│   ├── state.py                             # QAState (TypedDict)
+│   ├── nodes.py                             # QANodes — answer_node
+│   ├── graph.py                             # QAGraph — builds & compiles StateGraph
 │   ├── qa_runner.py                         # QARunner — console entry point
-│   ├── app.py                          # QAApp — Gradio web UI
-│   └── figure/                         # Auto-generated graph diagrams
-├── requirements.txt                    # Shared dependencies
-└── .env                                # API keys (never commit)
+│   ├── app.py                               # QAApp — Gradio web UI
+│   └── figure/                              # Auto-generated graph diagrams
+├── basics-2-state-annotated-reducers/      # Series 1, Part 2
+│   ├── config.py                            # Loads .env, defines Config
+│   ├── llm.py                               # GeminiLLM wrapper
+│   ├── state.py                             # TopicState with Annotated points field
+│   ├── nodes.py                             # TopicNodes — expand_node, refine_node
+│   ├── prompts/                             # LLM prompt templates
+│   │   ├── expand_node.txt                  # Prompt for expand_node
+│   │   └── refine_node.txt                  # Prompt for refine_node
+│   ├── graph.py                             # TopicGraph — START → expand → refine → END
+│   ├── topic_runner.py                      # TopicRunner — console entry point
+│   └── app.py                               # TopicApp — Gradio web UI
+├── requirements.txt                         # Shared dependencies
+└── .env                                     # API keys (never commit)
 ```
 
 ---
@@ -131,17 +160,27 @@ langgraph/
 
 Each project has two entry points.
 
-**Console runner:**
+**Console runner** (the runner file is named after the project — e.g. `qa_runner.py`, `topic_runner.py`):
 
 ```bash
+# Part 1
 cd basics-1-stategraph-nodes-edges
 python qa_runner.py
+
+# Part 2
+cd basics-2-state-annotated-reducers
+python topic_runner.py
 ```
 
 **Gradio web UI:**
 
 ```bash
+# Part 1
 cd basics-1-stategraph-nodes-edges
+python app.py
+
+# Part 2
+cd basics-2-state-annotated-reducers
 python app.py
 ```
 

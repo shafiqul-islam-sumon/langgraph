@@ -1,0 +1,3 @@
+List exactly 3 key points about: "{topic}".
+Write each as a single clear sentence.
+Output only the 3 sentences, one per line, no numbering or bullet symbols.

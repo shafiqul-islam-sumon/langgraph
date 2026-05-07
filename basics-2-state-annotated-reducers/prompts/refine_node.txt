@@ -1,0 +1,5 @@
+For each point below about "{topic}", write one deeper insight.
+
+{existing}
+
+Output exactly one insight per point as a single sentence, one per line, no numbering or bullet symbols.
