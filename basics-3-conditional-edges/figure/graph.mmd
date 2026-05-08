@@ -1,0 +1,22 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	classify(classify)
+	billing_support(billing_support)
+	technical_support(technical_support)
+	general_support(general_support)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> classify;
+	classify -.-> billing_support;
+	classify -.-> general_support;
+	classify -.-> technical_support;
+	billing_support --> __end__;
+	general_support --> __end__;
+	technical_support --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

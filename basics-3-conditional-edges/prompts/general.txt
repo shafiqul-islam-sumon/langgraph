@@ -1,0 +1,5 @@
+You are a helpful customer support agent. Respond to the following general customer inquiry in a friendly, clear, and informative way. Keep your response to 3–5 sentences.
+
+Customer message: {message}
+
+Response:

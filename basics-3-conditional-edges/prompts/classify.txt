@@ -1,0 +1,9 @@
+You are a customer support classifier. Read the customer message below and classify it into exactly one of these three categories:
+
+- billing: questions about payments, invoices, charges, subscriptions, or refunds
+- technical: questions about product issues, bugs, installation, setup, or troubleshooting
+- general: all other inquiries — business hours, policies, account information, general questions
+
+Message: {message}
+
+Reply with exactly one word — either billing, technical, or general. Nothing else.
