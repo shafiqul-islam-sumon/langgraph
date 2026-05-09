@@ -208,7 +208,7 @@ Everything above — the concepts, the code walkthrough, the Mermaid diagram, an
 |------|-------|------|
 | ← Part 2 | State, Annotated Fields & Custom Reducers | [basics-2-state-annotated-reducers/](../basics-2-state-annotated-reducers/) |
 | **Part 3** | **Conditional Edges & Routing Logic** | **You are here** |
-| Part 4 → | Checkpointers, Memory & Streaming | Coming soon |
+| Part 4 → | Checkpointers, Memory & Streaming | [basics-4-checkpointers-memory-streaming/](../basics-4-checkpointers-memory-streaming/) |
 
 ---
 

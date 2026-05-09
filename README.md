@@ -19,7 +19,7 @@ LangGraph applications — no matter how complex — are built from three primit
 | Part 1 | [`basics-1-stategraph-nodes-edges/`](basics-1-stategraph-nodes-edges/) | StateGraph, Nodes & Edges | [Read →](https://shafiqulai.github.io/blogs/blog_8.html) | [README →](basics-1-stategraph-nodes-edges/README.md) |
 | Part 2 | [`basics-2-state-annotated-reducers/`](basics-2-state-annotated-reducers/) | State, Annotated Fields & Custom Reducers | [Read →](https://shafiqulai.github.io/blogs/blog_9.html) | [README →](basics-2-state-annotated-reducers/README.md) |
 | Part 3 | [`basics-3-conditional-edges/`](basics-3-conditional-edges/) | Conditional Edges & Routing Logic | [Read →](https://shafiqulai.github.io/blogs/blog_10.html) | [README →](basics-3-conditional-edges/README.md) |
-| Part 4 | `basics-4-checkpointers-memory/` | Checkpointers, Memory & Streaming | Coming soon | — |
+| Part 4 | [`basics-4-checkpointers-memory-streaming/`](basics-4-checkpointers-memory-streaming/) | Checkpointers, Memory & Streaming | [Read →](https://shafiqulai.github.io/blogs/blog_11.html) | [README →](basics-4-checkpointers-memory-streaming/README.md) |
 | Part 5 | `basics-5-tools-toolnode/` | Tools, ToolNode & Prebuilt Components | Coming soon | — |
 | Part 6 | `basics-6-subgraphs-hitl/` | Subgraphs, Interrupt & Human-in-the-Loop | Coming soon | — |
 
@@ -40,6 +40,12 @@ Covers LangGraph's default **last-write-wins** merge rule and how `Annotated` fi
 Introduces **conditional edges** — the mechanism that lets a graph branch at runtime based on state. A router function reads the current state and returns the name of the next node. Builds a **Customer Support Router** that classifies incoming messages and routes them to dedicated billing, technical, or general support nodes.
 
 → [Full details in basics-3-conditional-edges/README.md](basics-3-conditional-edges/README.md)
+
+### Part 4 — Checkpointers, Memory & Streaming
+
+Introduces **persistent memory** using LangGraph checkpointers. A single argument at compile time — `graph.compile(checkpointer=...)` — turns any stateless graph into one that remembers every prior turn. Covers `MemorySaver` (in-RAM, development) and `SqliteSaver` (file-backed, production), `thread_id` isolation, `get_state()` / `get_state_history()`, and three streaming modes. Builds a **Personal Study Buddy** where Alice holds a multi-turn session about recursion, Bob starts an isolated session, and thread isolation is proven live.
+
+→ [Full details in basics-4-checkpointers-memory-streaming/README.md](basics-4-checkpointers-memory-streaming/README.md)
 
 ---
 
@@ -144,6 +150,16 @@ langgraph/
 │   ├── prompts/                         # LLM prompt templates (one file per node)
 │   ├── config.py / llm.py               # Shared config and LLM wrapper
 │   └── figure/                          # Auto-generated Mermaid diagrams
+├── basics-4-checkpointers-memory-streaming/  # Part 4 — Personal Study Buddy
+│   ├── README.md                             # Concepts, code walkthrough, how to run
+│   ├── state.py                              # StudyState — messages with add_messages reducer
+│   ├── nodes.py                              # StudyBuddyNodes — study_buddy_node
+│   ├── graph.py                              # StudyBuddyGraph — compiled with checkpointer
+│   ├── study_runner.py                       # Console entry point with multi-turn demo
+│   ├── app.py                                # Gradio Blocks with gr.State for thread isolation
+│   ├── prompts/                              # LLM prompt templates (study_buddy.txt)
+│   ├── config.py / llm.py                    # Shared config and LLM wrapper
+│   └── figure/                               # Auto-generated Mermaid diagrams
 ├── requirements.txt                     # Shared dependencies
 └── .env                                 # API keys (never commit)
 ```
@@ -165,6 +181,9 @@ cd basics-2-state-annotated-reducers && python topic_runner.py
 
 # Part 3
 cd basics-3-conditional-edges && python support_runner.py
+
+# Part 4
+cd basics-4-checkpointers-memory-streaming && python study_runner.py
 ```
 
 **Gradio web UI:**
