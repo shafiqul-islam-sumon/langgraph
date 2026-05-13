@@ -1,0 +1,1 @@
+Split a monthly income into budget categories: rent, food, savings, and discretionary. Percentages for rent, food, and savings must not exceed 100% in total. Use this when the user asks about budgeting, income allocation, or expense planning.

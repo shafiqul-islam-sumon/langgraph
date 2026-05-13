@@ -1,0 +1,1 @@
+Convert an amount from one currency to another using fixed exchange rates. Supported currencies: USD, EUR, GBP, JPY, BDT, CAD, AUD, INR. Use this when the user asks about currency conversion or exchange rates.

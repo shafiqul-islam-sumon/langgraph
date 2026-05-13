@@ -1,0 +1,1 @@
+Calculate the fixed monthly loan payment (EMI) for a given principal, annual interest rate (as a percentage), and loan term in months. Use this when the user asks about loan payments, car loans, home loans, or EMI calculations.

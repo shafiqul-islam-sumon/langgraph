@@ -20,7 +20,7 @@ LangGraph applications — no matter how complex — are built from three primit
 | Part 2 | [`basics-2-state-annotated-reducers/`](basics-2-state-annotated-reducers/) | State, Annotated Fields & Custom Reducers | [Read →](https://shafiqulai.github.io/blogs/blog_9.html) | [README →](basics-2-state-annotated-reducers/README.md) |
 | Part 3 | [`basics-3-conditional-edges/`](basics-3-conditional-edges/) | Conditional Edges & Routing Logic | [Read →](https://shafiqulai.github.io/blogs/blog_10.html) | [README →](basics-3-conditional-edges/README.md) |
 | Part 4 | [`basics-4-checkpointers-memory-streaming/`](basics-4-checkpointers-memory-streaming/) | Checkpointers, Memory & Streaming | [Read →](https://shafiqulai.github.io/blogs/blog_11.html) | [README →](basics-4-checkpointers-memory-streaming/README.md) |
-| Part 5 | `basics-5-tools-toolnode/` | Tools, ToolNode & Prebuilt Components | Coming soon | — |
+| Part 5 | [`basics-5-tools-toolnode/`](basics-5-tools-toolnode/) | Tools, ToolNode & Prebuilt Components | [Read →](https://shafiqulai.github.io/blogs/blog_12.html) | [README →](basics-5-tools-toolnode/README.md) |
 | Part 6 | `basics-6-subgraphs-hitl/` | Subgraphs, Interrupt & Human-in-the-Loop | Coming soon | — |
 
 ### Part 1 — StateGraph, Nodes & Edges
@@ -46,6 +46,12 @@ Introduces **conditional edges** — the mechanism that lets a graph branch at r
 Introduces **persistent memory** using LangGraph checkpointers. A single argument at compile time — `graph.compile(checkpointer=...)` — turns any stateless graph into one that remembers every prior turn. Covers `MemorySaver` (in-RAM, development) and `SqliteSaver` (file-backed, production), `thread_id` isolation, `get_state()` / `get_state_history()`, and three streaming modes. Builds a **Personal Study Buddy** where Alice holds a multi-turn session about recursion, Bob starts an isolated session, and thread isolation is proven live.
 
 → [Full details in basics-4-checkpointers-memory-streaming/README.md](basics-4-checkpointers-memory-streaming/README.md)
+
+### Part 5 — Tools, ToolNode & Prebuilt Components
+
+Introduces **tool calling** — the mechanism that lets an LLM delegate computation to Python functions instead of guessing. The `@tool` decorator wraps any function as a LangChain Tool; `bind_tools()` injects the tool schemas into the LLM; `ToolNode` executes the chosen function and returns a `ToolMessage`; `tools_condition` routes back to the agent or to END. Also covers `create_react_agent` — the prebuilt shortcut that assembles the entire ReAct graph in one call. Builds a **Personal Finance Assistant** that calculates loan EMIs, projects compound savings, converts currencies, and splits budgets — with exact Python arithmetic rather than LLM guesswork.
+
+→ [Full details in basics-5-tools-toolnode/README.md](basics-5-tools-toolnode/README.md)
 
 ---
 
@@ -107,7 +113,7 @@ Create a `.env` file in this folder (`langgraph/.env`):
 
 ```properties
 GOOGLE_API_KEY=your_google_api_key_here
-GEMINI_MODEL_NAME=gemini-2.0-flash
+GEMINI_MODEL_NAME=gemini-3-flash-preview
 GEMINI_TEMPERATURE=0.7
 GEMINI_MAX_RETRIES=2
 ```
@@ -160,6 +166,17 @@ langgraph/
 │   ├── prompts/                              # LLM prompt templates (study_buddy.txt)
 │   ├── config.py / llm.py                    # Shared config and LLM wrapper
 │   └── figure/                               # Auto-generated Mermaid diagrams
+├── basics-5-tools-toolnode/             # Part 5 — Personal Finance Assistant
+│   ├── README.md                        # Concepts, code walkthrough, how to run
+│   ├── state.py                         # FinanceState — messages with add_messages reducer
+│   ├── tools.py                         # @tool functions — 4 finance tools + TOOLS list
+│   ├── nodes.py                         # FinanceNodes — agent_node with bind_tools()
+│   ├── graph.py                         # FinanceGraph — ReAct loop, save_figure()
+│   ├── finance_runner.py                # Console entry point with 4-query demo
+│   ├── app.py                           # FinanceApp — Gradio ChatInterface
+│   ├── prompts/                         # LLM prompt templates (system.txt)
+│   ├── config.py / llm.py               # Shared config and LLM wrapper
+│   └── figure/                          # Auto-generated Mermaid diagrams
 ├── requirements.txt                     # Shared dependencies
 └── .env                                 # API keys (never commit)
 ```
@@ -184,6 +201,9 @@ cd basics-3-conditional-edges && python support_runner.py
 
 # Part 4
 cd basics-4-checkpointers-memory-streaming && python study_runner.py
+
+# Part 5
+cd basics-5-tools-toolnode && python finance_runner.py
 ```
 
 **Gradio web UI:**

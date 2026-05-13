@@ -1,0 +1,1 @@
+Calculate the final amount after annual compound interest. Use this when the user asks about savings growth, investment returns, or how much money they will have after investing a sum for a number of years.

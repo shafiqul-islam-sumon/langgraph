@@ -13,8 +13,8 @@ class Config:
     a setting imports Config directly — no instantiation required.
     """
 
-    # Falls back to gemini-2.0-flash if GEMINI_MODEL_NAME is not set
-    MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-2.0-flash")
+    # Falls back to gemini-3-flash-preview if GEMINI_MODEL_NAME is not set
+    MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-3-flash-preview")
     TEMPERATURE = float(os.getenv("GEMINI_TEMPERATURE", 0.7))
     # MAX_RETRIES controls how many times the SDK retries on transient API errors
     MAX_RETRIES = int(os.getenv("GEMINI_MAX_RETRIES", 2))
